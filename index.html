@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API</title>
+</head>
+
+<body>
+    <h2>Welcome to my weather app !</h2>
+
+    <p>City Name - <span style="font-weight: bolder" id="name"></span></p>
+    <p>Temperature - <span style="font-weight: bolder" id="temp"></span><span>&#176;</span></p>
+
+    <input type="text" id="city" placeholder="Enter city" autocomplete="off">
+    <button id="check">Check</button>
+</body>
+<script>
+    const name = document.getElementById("name");
+    const temperature = document.getElementById("temp");
+    const cityName = document.getElementById("city");
+    const checkButton = document.getElementById("check");
+
+
+
+    checkButton.addEventListener("click", function () {
+        // Request openweathermap's server !
+        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName.value}&appid=<api_key>&units=metric`)
+            .then(response => response.json())
+            .then(function (result) {
+                console.log(result);
+
+                temperature.innerText = `${result.main.temp}`;
+                name.innerText = result.name;
+            })
+            .catch(err => console.log(err))
+
+
+        // Empty text Box
+        cityName.value = "";
+    })
+
+
+</script>
+
+</html>
